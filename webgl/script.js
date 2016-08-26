@@ -69,10 +69,10 @@ function createVertices() {
     gl.vertexAttrib1f(pointSize, 10);
 
     var color = gl.getUniformLocation(shaderProgram, "color");
-    gl.uniform4f(color, 1, 1, 0, 1);
+    gl.uniform4f(color, 1, 0, 1, 1);
 }
 
 function draw() {
     gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.drawArrays(gl.POINTS, 0, 3);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
 }
