@@ -16,12 +16,9 @@ lower = np.array([0, 0, 0])
 upper = np.array([15, 15, 15])
 shapeMask = cv2.inRange(image, lower, upper)
 
-def outputImage(img, filename="test.png"):
-	return cv2.imwrite(filename, img)
-
 # find the contours in the mask
 (cnts, _) = cv2.findContours(shapeMask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-print "I found %d black shapes" % (len(cnts))
+print "Found %d black shapes" % (len(cnts))
 cv2.imshow("Mask", shapeMask)
 
 for c in cnts:
