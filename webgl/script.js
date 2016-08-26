@@ -17,30 +17,35 @@ function initGL() {
     gl.clearColor(1, 1, 1, 1);
 }
 
+function getShader(gl, id, type) {
+    var shaderScript, theSource, currentChild, shader;
+
+    shaderScript = document.getElementById(id);
+    if (!shaderScript) return null;
+    theSource = shaderScript.text;
+    if (!type) {
+        if (shaderScript.type == "x-shader/x-fragment") {
+            type = gl.FRAGMENT_SHADER;
+        } else if (shaderScript.type == "x-shader/x-vertex") {
+            type = gl.VERTEX_SHADER;
+        } else { // unknown shader type
+            return null;
+        }
+    }
+    shader = gl.createShader(type);
+    gl.shaderSource(shader, theSource);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error("An error occurred compiling the shaders: " + gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+    }
+    return shader;
+}
+
 function createShaders() {
-    var vs = "";
-    vs += "attribute vec4 coords;";
-    vs += "attribute float pointSize;";
-    vs += "void main(void) {";
-    vs += "  gl_Position = coords;";
-    vs += "  gl_PointSize = pointSize;";
-    vs += "}";
-
-    var vertexShader = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vertexShader, vs);
-    gl.compileShader(vertexShader);
-
-    var fs = "";
-    fs += "precision mediump float;";
-    fs += "uniform vec4 color;";
-    fs += "void main(void) {";
-    fs += "  gl_FragColor = color;";
-    fs += "}";
-
-    var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-    gl.shaderSource(fragmentShader, fs);
-    gl.compileShader(fragmentShader);
-
+    var vertexShader = getShader(gl, 'shader-vs');
+    var fragmentShader = getShader(gl, 'shader-fs');
     shaderProgram = gl.createProgram();
     gl.attachShader(shaderProgram, vertexShader);
     gl.attachShader(shaderProgram, fragmentShader);
@@ -60,7 +65,6 @@ function createVertices() {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
     var coords = gl.getAttribLocation(shaderProgram, "coords");
-    // gl.vertexAttrib3f(coords, 0.5, 0, 0);
     gl.vertexAttribPointer(coords, 3, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(coords);
     gl.bindBuffer(gl.ARRAY_BUFFER, null);
