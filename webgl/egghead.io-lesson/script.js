@@ -2,7 +2,19 @@
 var gl,
     shaderProgram,
     vertices,
-    vertexCount = 5000;
+    vertexCount = 5000,
+    mouseX = 0,
+    mouseY = 0;
+
+canvas.addEventListener("mousemove", function(event) {
+	mouseX = map(event.clientX, 0, canvas.width, -1, 1);
+	mouseY = map(event.clientY, 0, canvas.height, 1, -1);
+});
+
+// map value from src range to destination range
+function map(value, minSrc, maxSrc, minDst, maxDst) {
+	return (value - minSrc) / (maxSrc - minSrc) * (maxDst - minDst) + minDst;
+}
 
 initGL();
 createShaders();
@@ -72,7 +84,7 @@ function createVertices() {
     // gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
     var pointSize = gl.getAttribLocation(shaderProgram, "pointSize");
-    gl.vertexAttrib1f(pointSize, 1);
+    gl.vertexAttrib1f(pointSize, 2);
 
     var color = gl.getUniformLocation(shaderProgram, "color");
     gl.uniform4f(color, 1, 0, 1, 1);
@@ -80,11 +92,29 @@ function createVertices() {
 
 function draw() {
 	for(var i = 0; i < vertexCount * 2; i += 2) {
-		vertices[i] += Math.random() * 0.01 - 0.005;
-		vertices[i+1] += Math.random() * 0.01 - 0.005;
+		var dx = vertices[i] - mouseX,
+			dy = vertices[i+1] - mouseY,
+			dist = Math.sqrt(dx * dx + dy * dy);
+		if (dist < 0.2) {
+			vertices[i] = mouseX + dx / dist * 0.2;
+			vertices[i+1] = mouseY + dy / dist * 0.2;
+		}
+		else {
+			vertices[i] += Math.random() * 0.01 - 0.005;
+			vertices[i+1] += Math.random() * 0.01 - 0.005;
+		}
 	}
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(vertices));
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.POINTS, 0, vertexCount);
     requestAnimationFrame(draw);
+}
+
+function rotateZ(angle) {
+	var cos = Math.cos(angle),
+		sin = Math.sin(angle),
+		matrix = new Float32Array([cos, sin, 0, 0,
+								  -sin, cos, 0, 0,
+								     0,   0, 1, 0,
+								     0,   0, 0, 1]);
 }
