@@ -1,4 +1,4 @@
-wLarger LSTM network and generate text
+#Larger LSTM network and generate text
 import sys
 import numpy
 from keras.models import Sequential
@@ -7,8 +7,17 @@ from keras.layers import Dropout
 from keras.layers import LSTM
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
+
+# make sure the network weight file exists first
+try:
+  weights_path = sys.argv[-1]
+  weights_file = open(weights_path, 'r')
+except IOError:
+  print('Error opening weights file')
+  sys.exit()
+
 # load ascii text and covert to lowercase
-filename = "wonderland.txt"
+filename = "data/wonderland.txt"
 raw_text = open(filename).read()
 raw_text = raw_text.lower()
 # create mapping of unique chars to integers, and a reverse mapping
@@ -45,8 +54,8 @@ model.add(LSTM(256))
 model.add(Dropout(0.2))
 model.add(Dense(y.shape[1], activation='softmax'))
 # load the network weights
-filename = "weights-improvement-47-1.2219-bigger.hdf5"
-model.load_weights(filename)
+# filename = "weights-improvement-47-1.2219-bigger.hdf5"
+model.load_weights(weights_file.read())
 model.compile(loss='categorical_crossentropy', optimizer='adam')
 # pick a random seed
 start = numpy.random.randint(0, len(dataX)-1)
