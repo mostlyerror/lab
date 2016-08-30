@@ -1,24 +1,5 @@
 var gl;
 
-<<<<<<< HEAD:webgl/script.js
-=======
-var gl,
-    shaderProgram,
-    vertices,
-    vertexCount = 5000,
-    mouseX = 0,
-    mouseY = 0;
-
-canvas.addEventListener("mousemove", function(event) {
-	mouseX = map(event.clientX, 0, canvas.width, -1, 1);
-	mouseY = map(event.clientY, 0, canvas.height, 1, -1);
-});
-
-// map value from src range to destination range
-function map(value, minSrc, maxSrc, minDst, maxDst) {
-	return (value - minSrc) / (maxSrc - minSrc) * (maxDst - minDst) + minDst;
-}
->>>>>>> 5c0f32f953ecd2cf63c94bec096dabdba0277ec9:webgl/egghead.io-lesson/script.js
 
 function initGL (canvas) {
     try {
@@ -114,7 +95,6 @@ function setMatrixUniforms() {
     gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
 }
 
-<<<<<<< HEAD:webgl/script.js
 
 var triangleVertexPositionBuffer, 
     triangleVertexColorBuffer;
@@ -159,27 +139,6 @@ function initBuffers () {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(squareVertices), gl.STATIC_DRAW);
     squareVertexPositionBuffer.itemSize = 3;
     squareVertexPositionBuffer.numItems = 4;
-=======
-function createVertices() {
-    vertices = [];
-    for(var i = 0; i < vertexCount; i++) {
-    	vertices.push(Math.random() * 2 - 1);
-    	vertices.push(Math.random() * 2 - 1);
-    }
-
-    var buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.DYNAMIC_DRAW);
-
-    var coords = gl.getAttribLocation(shaderProgram, "coords");
-    // gl.vertexAttribPointer(coords, 3, gl.FLOAT, false, 0, 0);
-    gl.vertexAttribPointer(coords, 2, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(coords);
-    // gl.bindBuffer(gl.ARRAY_BUFFER, null);
-
-    var pointSize = gl.getAttribLocation(shaderProgram, "pointSize");
-    gl.vertexAttrib1f(pointSize, 2);
->>>>>>> 5c0f32f953ecd2cf63c94bec096dabdba0277ec9:webgl/egghead.io-lesson/script.js
 
     squareVertexColorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer);
@@ -192,42 +151,12 @@ function createVertices() {
     squareVertexColorBuffer.numItems = 4;
 }
 
-<<<<<<< HEAD:webgl/script.js
 function degToRad(degrees) {
     return degrees * Math.PI / 180;
-=======
-function draw() {
-	for(var i = 0; i < vertexCount * 2; i += 2) {
-		var dx = vertices[i] - mouseX,
-			dy = vertices[i+1] - mouseY,
-			dist = Math.sqrt(dx * dx + dy * dy);
-		if (dist < 0.2) {
-			vertices[i] = mouseX + dx / dist * 0.2;
-			vertices[i+1] = mouseY + dy / dist * 0.2;
-		}
-		else {
-			vertices[i] += Math.random() * 0.01 - 0.005;
-			vertices[i+1] += Math.random() * 0.01 - 0.005;
-		}
-	}
-    gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(vertices));
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.drawArrays(gl.POINTS, 0, vertexCount);
-    requestAnimationFrame(draw);
 }
 
-function rotateZ(angle) {
-	var cos = Math.cos(angle),
-		sin = Math.sin(angle),
-		matrix = new Float32Array([cos, sin, 0, 0,
-								  -sin, cos, 0, 0,
-								     0,   0, 1, 0,
-								     0,   0, 0, 1]);
->>>>>>> 5c0f32f953ecd2cf63c94bec096dabdba0277ec9:webgl/egghead.io-lesson/script.js
-}
-
-var rTri = 0;
-var rSquare = 0;
+var rPyramed = 0,
+    rCube = 0;
 function drawScene() {
     gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -240,7 +169,7 @@ function drawScene() {
 
     mvPushMatrix();
     //mat4.rotate(mvMatrix, degToRad(rTri), [0, 1, 0]);
-    mat4.rotate(mvMatrix, mvMatrix, degToRad(rTri), [0, 1, 0]);
+    mat4.rotate(mvMatrix, mvMatrix, degToRad(rPyramed), [0, 1, 0]);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
     gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, triangleVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
@@ -274,8 +203,8 @@ function animate() {
     var timeNow = new Date().getTime();
     if (lastTime != 0) {
         var elapsed = timeNow - lastTime;
-        rTri += (90 * elapsed) / 1000.0;
-        rSquare += (75 * elapsed) / 1000.0;
+        rPyramid += (90 * elapsed) / 1000.0;
+        rCube -= (75 * elapsed) / 1000.0;
     }
     lastTime = timeNow;
 }
