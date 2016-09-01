@@ -8,37 +8,28 @@ class Schelling {
     }
 
     populate () {
-    }
-    /*
-    seed (grid) {
+        let grid = this.grid,
+            cells = grid.cells;
+
         const total = grid.height * grid.width;
         const empty = Math.floor(total * this.empty_ratio);
         const occupied = total - empty;
 
         let arr = [];
-        // todo(ben): this needs to handle n races, instead of just 2
         for (var i = 0; i < occupied; i++) { 
-            arr.push(i % 2);
+            arr.push(i % this.n_races);
         }
         for (var i = 0; i < empty; i++) {
             arr.push(' ');
         }
-        let shuffled = grid.shuffle(arr);
-        grid.cells = grid.toGrid(shuffled);
 
-        return grid;
+        let arr2d = this.grid.convert_2d(arr);
+        this.grid.cells = this.grid.shuffle(arr2d);
     }
 
     /*
     tick () {
         // for each occupied spot
-        for (var cell in grid.cells) {
-            if cell.is_empty() continue();
-            if is_unhappy(cell) {
-                // mark for moving
-            }
-
-        }
         // check neighbors
         // evaluate similarity_threshold (is_unhappy)
         // if unhappy
@@ -50,7 +41,7 @@ class Schelling {
     }
 
     is_unhappy (cell) {
-        const neighbors = cell.get_neighbors();
+        // get neighbors
         // check sim thresh
         // return bool
     }
