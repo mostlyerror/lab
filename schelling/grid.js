@@ -1,19 +1,17 @@
 
+
 class Grid {
 
     constructor(width, height) {
         this.height = height;
         this.width = width;
         this.cells = [];
-        this.init();
+        //this.init();
     }
 
-    init ()  {
-        // doesn't seem necessary for use with simulation
-        for (var x = 0; x < this.width; x++) {
-            this.cells.push(Array(this.height));
-        }
-    }
+	flat_cells () {
+		return this.flatten(this.cells);
+	}
 
     flatten (arr) {
         const flat = [].concat(...arr);
@@ -30,6 +28,19 @@ class Grid {
         return res;
     }
 
+    get_matching(pattern) {
+		let arr = [], cell;
+		for (var y = 0; y < grid.height; y++) {
+			for (var x = 0; x < grid.width; x++) {
+				cell = this.get_cell(x, y)
+				if (cell === pattern) {
+					arr.push([x, y]);
+				}
+			}
+		}
+		return arr;
+	}
+
     is_2d (arr) {
         if (!arr.length) return false;
         return Array.isArray(arr[0]);
@@ -39,24 +50,17 @@ class Grid {
     shuffle (arr) {
         let multi = this.is_2d(arr);
         arr = this.flatten(arr);
-            
-        var i = 0,
-            j = 0, 
-            temp = null;
-
-        for (i = arr.length - 1; i > 0; i--) {
-            j = Math.floor(Math.random() * (i + 1));
-            temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-        }
-
+        arr.shuffle();
         return (multi ? this.convert_2d(arr) : arr);
     }
 
     get_cell (x, y) {
         return this.cells[y][x];
     }
+
+    set_cell (x, y, val) {
+    	return this.cells[y][x] = val;
+	}
 
     get_neighbors (x, y) {
         const dirs = {
@@ -92,9 +96,10 @@ class Grid {
     toString () {
         let out = "\n";
         for (var i in this.cells) {
-            out += this.cells[i].join(" ");
-            out += "\n";
+			out += this.cells[i].join(" ");
+			out += "\n";
         }
         return out;
     }
 }
+
