@@ -7,17 +7,7 @@ function start (route, handle) {
     function onRequest (request, response) {
         var postData = "";
         var pathName = url.parse(request.url).pathname;
-
-        request.setEncoding('utf8');
-
-        request.addListener('data', function (chunk) {
-            postData += chunk;
-            console.log("Received data chunk '" + chunk + "'");
-        });
-
-        request.addListener('end', function () {
-            route(handle, pathName, response, postData);
-        });
+        route(handle, pathName, response, request);
     }
 
 
