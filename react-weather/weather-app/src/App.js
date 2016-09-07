@@ -3,25 +3,38 @@ import React, { Component } from 'react';
 import './App.css';
 import xhr from 'xhr';
 
+import Plot from './Plot.js';
+
 class App extends Component {
     state = {
         location: '',
-        data: {}
+        data: {},
+        dates: [],
+        temps: []
     };
 
     fetchData = (evt) => {
         evt.preventDefault();
-        var location = encodeURIComponent(this.state.location);
-
-        var urlPrefix = 'http://api.openweathermap.org/data/2.5/forecast?q=';
-        var urlSuffix = '&APPID=56c063c40c8dff887108e0793039cbec&units=metric';
-        var url = urlPrefix + location + urlSuffix;
-
-        var self = this;
+        var location = encodeURIComponent(this.state.location),
+            urlPrefix = 'http://api.openweathermap.org/data/2.5/forecast?q=',
+            urlSuffix = '&APPID=56c063c40c8dff887108e0793039cbec&units=metric',
+            url = urlPrefix + location + urlSuffix,
+            self = this;
 
         xhr({url: url}, (err, data) => {
+            var body = JSON.parse(data.body),
+                list = body.list,
+                dates = [],
+                temps = [];
+            for(var i = 0; i < list.length; i++) {
+                dates.push(list[i].dt_txt);
+                temps.push(list[i].main.temp);
+            }
+
             self.setState({
-                data: JSON.parse(data.body)
+                data: body,
+                dates: dates,
+                temps: temps
             });
         });
     };
@@ -51,11 +64,24 @@ class App extends Component {
                         />
                     </label>
                 </form>
-                <p className="temp-wrapper">
-                    <span className="temp">{ currentTemp }</span>
-                    <span className="temp-symbol">°C</span>
-
-                </p>
+                {/*
+                 * Render the current temperature and the forecast if we have
+                 * the data otherwise return null
+                 */}
+                {(this.state.data.list) ? (
+                <div className="wrapper">
+                    <p className="temp-wrapper">
+                        <span className="temp">{ currentTemp }</span>
+                        <span className="temp-symbol">°C</span>
+                    </p>
+                    <h2>Forecast</h2>
+                    <Plot
+                        xData={this.state.dates}
+                        yData={this.state.temps}
+                        type="scatter"
+                    />
+                </div>
+                ) : null}
             </div>
         );
     }
