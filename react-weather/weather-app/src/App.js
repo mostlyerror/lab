@@ -10,7 +10,11 @@ class App extends Component {
         location: '',
         data: {},
         dates: [],
-        temps: []
+        temps: [],
+        selected: {
+            date: '',
+            temp: null
+        }
     };
 
     fetchData = (evt) => {
@@ -34,7 +38,11 @@ class App extends Component {
             self.setState({
                 data: body,
                 dates: dates,
-                temps: temps
+                temps: temps,
+                selected: {
+                    date: '',
+                    temp: null
+                }
             });
         });
     };
@@ -43,6 +51,18 @@ class App extends Component {
         this.setState({
             location: evt.target.value
         });
+    };
+
+    onPlotClick = (data) => {
+        if (data.points) {
+            this.setState({
+                selected: {
+                    date: data.points[0].x,
+                    temp: data.points[0].y
+                }
+            });
+            console.log(this.state);
+        }
     };
 
     render() {
@@ -71,13 +91,19 @@ class App extends Component {
                 {(this.state.data.list) ? (
                 <div className="wrapper">
                     <p className="temp-wrapper">
-                        <span className="temp">{ currentTemp }</span>
+                        <span className="temp">
+                            { this.state.selected.temp ? this.state.selected.temp : currentTemp }
+                        </span>
                         <span className="temp-symbol">°C</span>
+                        <span className="temp-date">
+                            { this.state.selected.temp ? this.state.selected.date : '' }
+                        </span>
                     </p>
                     <h2>Forecast</h2>
                     <Plot
                         xData={this.state.dates}
                         yData={this.state.temps}
+                        onPlotClick={this.onPlotClick}
                         type="scatter"
                     />
                 </div>

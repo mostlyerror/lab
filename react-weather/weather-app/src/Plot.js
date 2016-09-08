@@ -2,6 +2,7 @@
 import React from 'react';
 
 class Plot extends React.Component {
+
     drawPlot = () => {
         Plotly.newPlot('plot', [{
             x: this.props.xData,
@@ -17,7 +18,9 @@ class Plot extends React.Component {
         }, {
             displayModeBar: false
         });
+        document.getElementById('plot').on('plotly_click', this.props.onPlotClick);
     }
+
     componentDidMount() {
         this.drawPlot();
     }
