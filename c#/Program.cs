@@ -24,11 +24,17 @@ namespace ConsoleApplication1
 
             Speedometer speedo = new Speedometer();
             speedo.Report();
-            speedo.setCurrentSpeed(-1);
+
+            speedo.CurrentSpeed = 1;
             speedo.Report();
-            speedo.setCurrentSpeed(121);
+
+            speedo.CurrentSpeed = -1;
             speedo.Report();
-            speedo.setCurrentSpeed(25);
+
+            speedo.CurrentSpeed = 121;
+            speedo.Report();
+
+            speedo.CurrentSpeed = 25;
             speedo.Report();
         }
 
@@ -37,22 +43,32 @@ namespace ConsoleApplication1
     public class Speedometer
     {
         private int _currentSpeed;
-        public int GetCurrentSpeed()
+        public int CurrentSpeed
         {
-            return _currentSpeed;
+            get
+            {
+                return _currentSpeed;
+            }
+            set
+            {
+                if (value < 0) return;
+                if (value > 120) return;
+                // value is a keyword used in setters representing the new value;
+                _currentSpeed = value;
+            }
         }
-        public void setCurrentSpeed(int newSpeed)
-        {
-            if (newSpeed < 0) return;
-            if (newSpeed > 120) return;
 
-            _currentSpeed = newSpeed;
-        }
         public void Report()
         {
-            Console.WriteLine($"current speed: {this.GetCurrentSpeed()}");
+            Console.WriteLine(this.CurrentSpeed);
         }
     }
 
-
+    public class Person
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string TaxPayerId { get; set; }
+    }
 }
