@@ -3,21 +3,8 @@
 </head>
 <body>
 	<p>Find Contours</p>
-	<form action="/file-upload" class="dropzone" id="my-awesome-dropzone"</form>
-
-
-	<script type="text/javascript">
-		Dropzone.options.myAwesomeDropzone ={
-			paramName: "file",
-			maxFilesize: 2,
-			accept: function(file, done) {
-				if (file.name == "justinbieber.jpg") {
-					done("Naha, you don't);
-				}
-				else {
-					done();
-				}
-			}
-		};
+	<form id="my-dropzone" action="/upload-target" class="dropzone"></form>
+	<script>
+		Dropzone.options.myDropzone = { maxFilesize: 1};
 	</script>
 </body>
