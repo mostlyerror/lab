@@ -36,6 +36,9 @@ namespace ConsoleApplication1
 
             speedo.CurrentSpeed = 25;
             speedo.Report();
+
+            Person person = new Person(DateTime.Today);
+            Console.WriteLine($"person was born: {person.DateOfBirth}");
         }
 
     }
@@ -66,9 +69,15 @@ namespace ConsoleApplication1
 
     public class Person
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
         public DateTime DateOfBirth { get; set; }
-        public string TaxPayerId { get; set; }
+        public string TaxPayerId { get; set; } = string.Empty;
+
+        public Person (DateTime dateOfBirth)
+        {
+            DateOfBirth = dateOfBirth;
+        }
     }
 }
