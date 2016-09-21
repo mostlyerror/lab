@@ -49,14 +49,13 @@ namespace ConsoleApplication1
     public class Course
     {
         public string CourseName;
-        private List<Student> Roster { get; }
+        private List<Student> Roster { get; } = new List<Student>();
         
         public Course(string courseName)
         {
             this.CourseName = courseName;
-            Student ben = new Student("Ben", "poon", DateTime.Now);
-            Student sarah = new Student("Sarah", "Chen", DateTime.Today);
-            this.Roster = new List<Student>() { ben, sarah };
+            this.Roster.Add(new Student("Ben", "poon", DateTime.Now));
+            this.Roster.Add(new Student("Sarah", "Chen", DateTime.Today));
         }
         public List<string> RosterNames()
         {
