@@ -8,76 +8,61 @@ namespace ConsoleApplication1
 {
     class Program
     {
-
-        int version = 123;
-
         static void Main(string[] args)
         {
-            const int four = 4;
-            Func<int, int> addOne = x => x + 1;
-            Func<int, int, int> calcArea = (x, y) => x * y;
-            Func<int> twentyFive = () => calcArea(addOne(four), addOne(four));
-            Console.WriteLine(twentyFive());
-
-            Program myProgram = new Program();
-            Console.WriteLine($"{myProgram.version}");
-
-            Speedometer speedo = new Speedometer();
-            speedo.Report();
-
-            speedo.CurrentSpeed = 1;
-            speedo.Report();
-
-            speedo.CurrentSpeed = -1;
-            speedo.Report();
-
-            speedo.CurrentSpeed = 121;
-            speedo.Report();
-
-            speedo.CurrentSpeed = 25;
-            speedo.Report();
-
-            Person person = new Person(DateTime.Today);
-            Console.WriteLine($"person was born: {person.DateOfBirth}");
-        }
-
-    }
-
-    public class Speedometer
-    {
-        private int _currentSpeed;
-        public int CurrentSpeed
-        {
-            get
-            {
-                return _currentSpeed;
-            }
-            set
-            {
-                if (value < 0) return;
-                if (value > 120) return;
-                // value is a keyword used in setters representing the new value;
-                _currentSpeed = value;
-            }
-        }
-
-        public void Report()
-        {
-            Console.WriteLine(this.CurrentSpeed);
+            Course course = new Course("Biology 101");
+            Console.WriteLine(course.CourseName);
+            Console.WriteLine(course.RosterNames());
+            course.RosterNames().ForEach(Console.WriteLine);
         }
     }
 
     public class Person
     {
-
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        public DateTime DateOfBirth { get; set; }
-        public string TaxPayerId { get; set; } = string.Empty;
-
-        public Person (DateTime dateOfBirth)
+        protected string FirstName { get; private set; }
+        protected string LastName { get; private set; }
+        public DateTime DateOfBirth { get; private set; }
+        
+        public Person(string firstName, string lastName, DateTime dateOfBirth)
         {
-            DateOfBirth = dateOfBirth;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.DateOfBirth = dateOfBirth;
+        }
+
+        public string FullName { get { return $"{this.FirstName} {this.LastName}"; } }
+
+        public bool IsAnAdult()
+        {
+            var eighteenYearsAgo = DateTime.Today.AddYears(-18);
+            return this.DateOfBirth < eighteenYearsAgo;
+        }
+    }
+
+    public class Student : Person
+    {
+        public Student(string firstName, string lastName, DateTime dateOfBirth) : base(firstName, lastName, dateOfBirth) { }
+        public string SchoolName { get; set; }
+        public string RosterName { get { return $"{this.LastName}, {this.FirstName}"; } }
+    }
+
+    public class Course
+    {
+        public string CourseName;
+        private List<Student> Roster { get; }
+        
+        public Course(string courseName)
+        {
+            this.CourseName = courseName;
+            Student ben = new Student("Ben", "poon", DateTime.Now);
+            Student sarah = new Student("Sarah", "Chen", DateTime.Today);
+            this.Roster = new List<Student>() { ben, sarah };
+        }
+        public List<string> RosterNames()
+        {
+            List<string> rosterNames = new List<string>();
+            Roster.ForEach(student => rosterNames.Add(student.RosterName));
+            return rosterNames;
         }
     }
 }
