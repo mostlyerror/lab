@@ -1,3 +1,5 @@
+require_relative "./mmu"
+
 class CPU
   OPCODE = [
     :cls,
@@ -51,3 +53,5 @@ class CPU
     # if equal increment pc by 2
   end
 end
+
+$mmu = MMU.new
