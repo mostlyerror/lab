@@ -4,12 +4,12 @@ var canvas,
     interval,
     paddleHeight = 200, paddleWidth = 20,
     ballSize = 10,
-    ballX, ballY, ballSpeedX = 10, ballSpeedY = 10,
-    framesPerSecond = 30;
+    ballX, ballY, ballSpeedX = 6, ballSpeedY = 9,
+    framesPerSecond = 30,
+    leftPlayerPoints = rightPlayerPoints = 0,
+    leftPaddleY, rightPaddleY;
 
 function reset () {
-    console.log('reset');
-
     clearInterval(interval);
     canvas = document.getElementById('gameCanvas');
     context = canvas.getContext('2d');
@@ -18,6 +18,7 @@ function reset () {
 
     ballX = canvas.width/2 - ballSize/2,
     ballY = canvas.height/2 - ballSize/2;
+    leftPaddleY = rightPaddleY = canvas.height/2;
 
     interval = setInterval(function () {
         move();
@@ -27,18 +28,37 @@ function reset () {
 
 
 function move () {
-    if (ballX > canvas.width) {
+
+    // left paddle collision check
+    var lptop = leftPaddleY - paddleHeight/2;
+    var lpbot = leftPaddleY + paddleHeight/2;
+
+    if (ballX >= canvas.width-paddleWidth) {
         ballSpeedX = -ballSpeedX;
+        if (!((lptop < ballY) && (lpbot > ballY))) {
+            leftPlayerPoints++;
+            console.log('Score | ', leftPlayerPoints, rightPlayerPoints);
+            reset();
+        }
     }
-    if (ballX < 0) {
+
+    // right paddle collision check
+    var rptop = rightPaddleY - paddleHeight/2;
+    var rpbot = rightPaddleY + paddleHeight/2;
+
+    if (ballX <= paddleWidth) {
         ballSpeedX = -ballSpeedX;
+        if (!((rptop < ballY) && (rpbot > ballY))) {
+            rightPlayerPoints++;
+            console.log('Score | ', leftPlayerPoints, rightPlayerPoints);
+            reset();
+        }
     }
-    if (ballY > canvas.height) {
-        ballSpeedY = -ballSpeedY;
-    }
-    if (ballY < 0) {
-        ballSpeedY = -ballSpeedY;
-    }
+
+    if (ballY > canvas.height) ballSpeedY = -ballSpeedY;
+
+    if (ballY < 0) ballSpeedY = -ballSpeedY;
+    
     ballX += ballSpeedX;
     ballY += ballSpeedY;
 }
@@ -48,9 +68,13 @@ function draw () {
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     context.fillStyle = 'white';
-    context.fillRect(10, canvas.height/2 - paddleHeight/2, paddleWidth, paddleHeight);
-    context.fillRect(canvas.width-30, canvas.height/2 - paddleHeight/2, paddleWidth, paddleHeight);
 
+    // paddles
+    context.fillRect(0, canvas.height/2 - paddleHeight/2, paddleWidth, paddleHeight);
+    context.fillRect(canvas.width-paddleWidth, canvas.height/2 - paddleHeight/2, paddleWidth, paddleHeight);
+
+    //ball
+    context.fillStyle = 'red';
     context.fillRect(ballX, ballY, ballSize, ballSize);
 }
 
