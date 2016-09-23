@@ -2,7 +2,7 @@
 var canvas,
     context,
     interval,
-    paddleHeight = 200, paddleWidth = 20,
+    paddleHeight = 150, paddleWidth = 20,
     ballSize = 10,
     ballX, ballY, ballSpeedX = 6, ballSpeedY = 9,
     framesPerSecond = 30,
@@ -83,6 +83,18 @@ function draw () {
     context.fillRect(ballX, ballY, ballSize, ballSize);
 }
 
-document.onmousemove = function (e) { leftPaddleY = e.clientY - paddleHeight/2; };
+document.onmousemove = function (e) { 
+    leftPaddleY = e.clientY - paddleHeight/2;
+
+    if (e.clientY < paddleHeight/2) {
+        leftPaddleY = 0;
+    }
+
+    if (e.clientY > (canvas.height - paddleHeight/2)) { 
+        leftPaddleY = canvas.height - paddleHeight;
+    }
+
+};
+
 window.onload = reset;
 
