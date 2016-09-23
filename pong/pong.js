@@ -21,6 +21,7 @@ function reset () {
     ballX = canvas.width/2;
     ballY = canvas.height/2;
     rightPaddleY = rightPaddleY = canvas.height/2;
+    ballSpeedY += 1;
 
     interval = setInterval(function () {
         move();
@@ -37,19 +38,23 @@ function move () {
     rpbot = rightPaddleY + paddleHeight/2;
 
     // left paddle collision check
-    if ((ballX - ballSize/2) < paddleWidth) {
+    if (ballX < paddleWidth) {
         ballSpeedX = -ballSpeedX;
-        if (!((lptop < ballY) && (lpbot > ballY))) {
-            leftPlayerPoints++;
+        
+        if ((ballY < (leftPaddleY - paddleHeight/2)) || 
+            (ballY > (leftPaddleY + paddleHeight/2))) {
+            rightPlayerPoints++;
             reset();
         }
     }
 
     // right paddle collision check
-    if ((ballX + ballSize/2) > canvas.width-paddleWidth) {
+    if (ballX > canvas.width-paddleWidth) {
         ballSpeedX = -ballSpeedX;
-        if (!((rptop < ballY) && (rpbot > ballY))) {
-            rightPlayerPoints++;
+        
+        if ((ballY < (rightPaddleY - paddleHeight/2)) || 
+            (ballY > (rightPaddleY + paddleHeight/2))) {
+            leftPlayerPoints++;
             reset();
         }
     }
@@ -85,15 +90,10 @@ function draw () {
 
 document.onmousemove = function (e) { 
     leftPaddleY = e.clientY - paddleHeight/2;
-
-    if (e.clientY < paddleHeight/2) {
+    if (e.clientY <= paddleHeight/2)
         leftPaddleY = 0;
-    }
-
-    if (e.clientY > (canvas.height - paddleHeight/2)) { 
+    if (e.clientY > (canvas.height - paddleHeight/2))
         leftPaddleY = canvas.height - paddleHeight;
-    }
-
 };
 
 window.onload = reset;
