@@ -37,7 +37,7 @@ function move () {
         ballSpeedX = -ballSpeedX;
         if (!((lptop < ballY) && (lpbot > ballY))) {
             leftPlayerPoints++;
-            console.log('Score | ', leftPlayerPoints, rightPlayerPoints);
+            //console.log('Score | ', leftPlayerPoints, rightPlayerPoints);
             reset();
         }
     }
@@ -50,7 +50,7 @@ function move () {
         ballSpeedX = -ballSpeedX;
         if (!((rptop < ballY) && (rpbot > ballY))) {
             rightPlayerPoints++;
-            console.log('Score | ', leftPlayerPoints, rightPlayerPoints);
+            //console.log('Score | ', leftPlayerPoints, rightPlayerPoints);
             reset();
         }
     }
@@ -73,9 +73,16 @@ function draw () {
     context.fillRect(0, canvas.height/2 - paddleHeight/2, paddleWidth, paddleHeight);
     context.fillRect(canvas.width-paddleWidth, canvas.height/2 - paddleHeight/2, paddleWidth, paddleHeight);
 
+    //scoreboard
+    context.font = "40px Verdana";
+    context.textAlign = "center";
+    var scoreString = leftPlayerPoints + " - " + rightPlayerPoints;
+    context.fillText(scoreString, canvas.width/2, 50);
+
     //ball
     context.fillStyle = 'red';
     context.fillRect(ballX, ballY, ballSize, ballSize);
+
 }
 
 window.onload = reset;
