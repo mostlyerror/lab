@@ -10,14 +10,14 @@ module Wellspring
 	self.payload[attr_name.to_s]
       end
 
-      define_method("#{attr_name}=".to_sym) do
+      define_method("#{attr_name}=".to_sym) do |value|
 	self.payload ||= {}
 	self.payload[attr_name.to_s] = value
       end
+    end
 
-      def self.content_attributes
-	@content_attributes ||= {}
-      end
+    def self.content_attributes
+      @content_attributes ||= {}
     end
   end
 end

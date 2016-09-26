@@ -8,7 +8,27 @@
 </head>
 <body>
 
-<%= yield %>
+  <ul>
+    <% Wellspring.configuration.content_classes.each do |class_name| %>
+    <li>
+      <%= link_to class_name.tableize.titleize, entries_path(content_class: class_name.tableize) %>
+    </li>
+  <% end %>
+  </ul>
+
+  <%= yield %>
+
+  <%= simple_form_for(@entry, as: :entry, url: entries_path) do |f| %>
+    <%= f.hidden_field :type, value: @entry.type %>
+    <%= f.input :title %>
+    <%= @entry.class.content_attributes.each do |attr_name, attr_type| %>
+      <%= f.input attr_name, as: attr_type %>
+    <% end %>
+
+    <%= f.input :slug %>
+    <%= f.input :author_name %>
+    <%= f.input :published_at %>
+  <% end %>
 
 </body>
 </html>
