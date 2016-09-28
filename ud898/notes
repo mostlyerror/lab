@@ -1,0 +1,4 @@
+fulfilled (resolved) : it worked :)
+rejected (failed) : it didnt work :(
+pending: waiting
+settled: fulfilled or rejected.
