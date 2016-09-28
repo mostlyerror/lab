@@ -3,7 +3,7 @@ require 'json'
 
 class Product
   url = 'https://fomotograph-api.udacity.com/products.json'
-  DATA = HTTParty.get(url)['photos']
+  DATA ||= HTTParty.get(url)['photos']
 
   LOCATIONS = ['canada', 'england', 'france', 'ireland', 'mexico', 'scotland', 'taiwan', 'us']
 
@@ -35,6 +35,10 @@ class Product
   end
 
   def self.find(id)
-    all.select {|product| product.id == id }
+    all.select {|product| product.id.to_i == id.to_i }.first
+  end
+
+  def self.deals
+    all.select {|product| product.price < 10.0 }
   end
 end
