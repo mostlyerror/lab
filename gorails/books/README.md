@@ -1,5 +1,7 @@
 # README
 
+![ Implement All the Features ]( http://www.mememaker.net/static/images/memes/4492113.jpg )
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
