@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+orson = Author.create({
+  name: 'Orson Scott Card'
+})
+
+Book.create({
+  title: "Ender's Game",
+  published_at: nil,
+  available: true,
+  author: orson
+});
