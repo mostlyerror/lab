@@ -1,4 +1,7 @@
 <%= link_to book do %>
   <h2><%= book.title %></h2>
 <% end %>
+<% if book.cover_image_url(:thumb) %>
+  <p><%= image_tag book.cover_image_url(:thumb).to_s %></p>
+<% end %>
 <p><%= book.description %></p>
