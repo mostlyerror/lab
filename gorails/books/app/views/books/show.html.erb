@@ -5,6 +5,8 @@
   <%= @book.title %>
 </p>
 
+<%= image_tag @book.cover_image.url if @book.cover_image? %>
+
 <p>
   <strong>Description:</strong>
   <%= @book.description %>
