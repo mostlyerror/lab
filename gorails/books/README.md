@@ -2,25 +2,12 @@
 
 ![ Implement All the Features ]( http://www.mememaker.net/static/images/memes/4492113.jpg )
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Some of the things implemented in this sample application:
 
-Things you may want to cover:
+* User authentication via Devise
+* Bootstrap Styles
+* URL slugs with FriendlyID
+* Pagination with will_paginate
+* File uploading with carrierwave
+* Button Loading Animatoins with jQuery UJS & FontAwesome
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
