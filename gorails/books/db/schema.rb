@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161001214339) do
+ActiveRecord::Schema.define(version: 20161011134028) do
 
   create_table "books", force: :cascade do |t|
     t.string   "title"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20161001214339) do
     t.string   "slug"
     t.string   "cover"
     t.string   "cover_image"
+    t.integer  "user_id"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
