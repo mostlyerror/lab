@@ -5,6 +5,7 @@ const context = canvas.getContext('2d');
 context.scale(20, 20);
 
 function arenaSweep() {
+	let rowCount = 1;
 	outer: for (let y = arena.length -1; y > 0; --y) { // yavascript trick to continue on the outer loop!
 		for (let x = 0; x < arena[y].length; ++x) {
 			if (arena[y][x] === 0) {
@@ -14,6 +15,9 @@ function arenaSweep() {
 		const row = arena.splice(y, 1)[0].fill(0);
 		arena.unshift(row);
 		++y;
+
+		player.score += rowCount * 10;
+		rowCount *= 2;
 	}
 }
 
@@ -120,6 +124,7 @@ function playerDrop() {
 			merge(arena, player);
 			playerReset();
 			arenaSweep();
+			updateScore();
 		}
 		dropCounter = 0; // keep 1 second delay for auto-drop after manual drop
 }
@@ -139,6 +144,8 @@ function playerReset() {
 				   (player.matrix[0].length / 2 | 0);
 	if (collide(arena, player)) {
 		arena.forEach(row => row.fill(0));
+		player.score = 0;
+		updateScore();
 	}
 }
 
@@ -194,6 +201,10 @@ function update(time = 0) {
 	window.requestAnimationFrame(update);
 }
 
+function updateScore() {
+	document.getElementById('score').innerText = player.score;
+}
+
 const colors = [
 	null,
 	'#ff0d72',
@@ -207,7 +218,8 @@ const colors = [
 
 const player = {
 	pos: {x: 5, y: 5},
-	matrix: createPiece('T')
+	matrix: null,
+	score: 0
 };
 
 const arena = createMatrix(12, 20);
@@ -227,4 +239,6 @@ document.addEventListener('keydown', event => {
 	}
 });
 
+playerReset();
+updateScore();
 update();
