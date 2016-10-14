@@ -81,7 +81,32 @@ function playerMove(dir) {
 	if (collide(arena, player)) { 
 		player.pos.x -= dir;
 	}
+}
 
+
+function playerRotate(dir) {
+	rotate(player.matrix, dir);
+}
+
+function rotate(matrix, dir) {
+	for (let y = 0; y < matrix.length; ++y) {
+		for (let x = 0; x < y; ++x) {
+			// tuple switch
+			[
+				matrix[x][y],
+				matrix[y][x]
+			] = [
+				matrix[y][x],
+				matrix[x][y],
+			];
+		}
+	}
+
+	if (dir > 0) {
+		matrix.forEach(row => row.reverse());
+	} else {
+		matrix.reverse();
+	}
 }
 
 let dropCounter = 0;
@@ -107,7 +132,6 @@ const player = {
 
 const arena = createMatrix(12, 20);
 
-
 document.addEventListener('keydown', event => {
 	console.log(event.keyCode);
 	if (event.keyCode === 37) {
@@ -116,6 +140,10 @@ document.addEventListener('keydown', event => {
 		playerMove(1);
 	} else if (event.keyCode === 40) {
 		playerDrop();
+	} else if (event.keyCode === 81) {
+		playerRotate(-1);
+	} else if (event.keyCode === 87) {
+		playerRotate(1);
 	}
 });
 
