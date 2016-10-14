@@ -85,7 +85,18 @@ function playerMove(dir) {
 
 
 function playerRotate(dir) {
+	const pos = player.pos.x;
+	let offset = 1;
 	rotate(player.matrix, dir);
+	while (collide(arena, player)) {
+		player.pos.x += offset;
+		offset = -(offset + (offset > 0 ? 1 : -1)); // 1, -2, 3, -4, etc.
+		if (offset > player.matrix[0].length) {
+			rotate(player.matrix, -dir); // couldnt find an offset that makes sense, rotate back
+			player.pos.x = pos;
+			return;
+		}
+	}
 }
 
 function rotate(matrix, dir) {
@@ -109,8 +120,8 @@ function rotate(matrix, dir) {
 	}
 }
 
-let dropCounter = 0;
 let dropInterval = 1000;
+let dropCounter = 0;
 let lastTime = 0;
 function update(time = 0) {
 	const deltaTime = time - lastTime;
