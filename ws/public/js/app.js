@@ -1,1 +1,4 @@
-alert('hi')
+var io = io();
+
+
+

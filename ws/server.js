@@ -12,9 +12,12 @@ app.get('/', function (req, res) {
 
 io.on('connection', function(socket) {
     console.log('connected: ', socket.id);
-    socket.on('move', function (req, res, data) {
-        console.log(data);
+
+    socket.on('move', function (data) {
+        socket.emit('move', data);
     });
+
+
 });
 
 
