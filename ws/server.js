@@ -1,20 +1,20 @@
+'use strict';
+const express = require('express'),
+    app = express(),
+    http = require('http').Server(app),
+    io = require('socket.io')(http);
 
-var app = require('express')(),
-	http = require('http').Server(app),
-	io = require('socket.io')(http);
-
+app.use(express.static('public'));
 
 app.get('/', function (req, res) { 
 	res.sendFile(__dirname + '/index.html');
 });
 
 io.on('connection', function(socket) {
-
-	io.emit('chat message', socket.id + ' has joined.');
-
-	socket.on('chat message', function(msg) { 
-		io.emit('chat message', msg);
-	});
+    console.log('connected: ', socket.id);
+    socket.on('move', function (req, res, data) {
+        console.log(data);
+    });
 });
 
 
