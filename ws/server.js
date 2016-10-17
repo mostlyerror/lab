@@ -1,4 +1,5 @@
 'use strict';
+
 const express = require('express'),
     app = express(),
     http = require('http').Server(app),
@@ -11,12 +12,12 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function(socket) {
+
     console.log('connected: ', socket.id);
 
     socket.on('move', function (data) {
-        socket.emit('move', data);
+        socket.broadcast.emit('move', data);
     });
-
 
 });
 

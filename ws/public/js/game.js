@@ -38,6 +38,8 @@ class Player
     }
 }
 
+
+
 class LocalPlayer extends Player
 {
     constructor(ctx)
@@ -70,6 +72,8 @@ class LocalPlayer extends Player
         document.addEventListener('keydown', keyDown);
     }
 }
+
+
 
 class RemotePlayer extends Player
 {
