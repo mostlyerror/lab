@@ -6,10 +6,28 @@ describe Todo, '#completed?' do
 
     expect(todo).to be_completed
   end
-  it "retuns false if completed_at is nil" do
+  it "returns false if completed_at is nil" do
     todo = Todo.new(completed_at: nil)
 
     expect(todo).to_not be_completed
   end
 end
 
+describe Todo, "#complete!" do
+  it "updates completed_at" do
+    todo = Todo.create(completed_at: nil)
+    todo.complete!
+    expect(todo).to be_completed
+  end
+end
+
+
+describe Todo, "#incomplete!" do
+  it "sets completed_at to nil" do
+    todo = Todo.create!(completed_at: Time.current)
+    expect(todo).to be_completed
+
+    todo.incomplete!
+    expect(todo).not_to be_completed
+  end
+end

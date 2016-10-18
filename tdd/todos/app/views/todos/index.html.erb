@@ -3,8 +3,12 @@
 <ul class="todos">
 <% @todos.each do |todo| %>
   <li class="<%= 'completed' if todo.completed? %>">
-    <%= todo.title %>
-    <%= button_to "Mark complete", todo_completion_path(todo) %>
+  <span style="<%= "text-decoration:line-through;" if todo.completed? %>"><%= todo.title %></span>
+    <% if todo.completed? %>
+      <%= button_to "Mark incomplete", todo_completion_path(todo), method: :delete %>
+    <% else %> 
+      <%= button_to "Mark complete", todo_completion_path(todo) %>
+    <% end %>
   </li>
 <% end %>
 </ul>
