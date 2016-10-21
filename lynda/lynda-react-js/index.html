@@ -1,11 +1,23 @@
 <html>
 <head>
-<script src="https://fb.me/react-0.13.3.min.js"></script>
+	<script src="https://fb.me/react-0.13.3.min.js"></script>
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.min.js"></script>-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.17.0/babel.min.js"></script>
 </head>
 <body>
-	<script>
-		React.render(React.createElement('div', null, 'Hello World'),
-			document.body);
+	<script type="text/babel">
+		var HelloWorld = React.createClass({
+			render: function() {
+				return (
+					<div>
+						<h1>Hello world</h1>
+						<p>This is some text</p>
+					</div>
+				)
+			}
+		});
+
+		React.render(<HelloWorld />, document.body);
 	</script>
 
 </body>
