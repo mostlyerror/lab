@@ -9,6 +9,9 @@ var Note = React.createClass({
     },
 
     save: function () {
+        var val = this.refs.newText.getDOMNode().value;
+        alert('TODO: Save note value ' + val);
+
         this.setState({editing: false});
     },
 
@@ -35,7 +38,8 @@ var Note = React.createClass({
     renderForm: function () {
         return (
             <div className="note">
-                <textarea defaultValue={this.props.children}
+                <textarea ref="newText" 
+                          defaultValue={this.props.children}
                 className="form-control">
                 </textarea>
                 <button 
