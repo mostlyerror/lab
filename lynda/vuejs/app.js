@@ -1,67 +1,34 @@
-var app = new Vue({
-    el: '#app',
+var appWatch = new Vue({
+    el: '#app-watch',
     data: {
-        message: 'Hello Vue!'
-    }
-});
-
-var app2 = new Vue({
-    el: '#app-2',
-    data: {
-        message: 'You loaded this page on ' + new Date()
-    }
-});
-
-var app3 = new Vue({
-    el: '#app-3',
-    data: {
-        seen: true
-    }
-});
-
-
-var app4 = new Vue({
-    el: '#app-4',
-    data: {
-        todos: [
-            { text: 'hey' },
-            { text: 'howdy' },
-            { text: 'allo!'}
-        ]
-    }
-});
-
-var app5 = new Vue({
-    el: '#app-5',
-    data: {
-        message: 'Hello Vue.js!'
+        question: '',
+        answer: 'I cannot give you an answer until you ask a question!'
+    },
+    watch: {
+        question: function (newQuestion) {
+            this.answer = 'Waiting for you to stop typing...';
+            this.getAnswer();
+        }
     },
     methods: {
-        reverseMessage: function () {
-            this.message = this.message.split(' ').reverse().join(' ')
-        }
-    }
-});
+        getAnswer: _.debounce(
+            function () {
+                var vm = this;
 
-var app6 = new Vue({
-    el: '#app-6',
-    data: {
-        message: 'Hello Vue!'
-    }
-});
+                if (this.question.indexOf('?') === -1) {
+                    vm.answer = 'Questions usually contain a question mark. ;-)';
+                    return;
+                }
+                vm.answer = 'Thinking...';
 
-Vue.component('todo-item', {
-    props: ['todo'],
-    template: '<li>{{ todo.text }}</li>'
-});
-
-var app7 = new Vue({
-    el: '#app-7',
-    data: {
-        todos: [
-            { text: 'learn javascript' },
-            { text: 'learn vue' },
-            { text: 'build something awesome' }
-        ]
+                axios.get('https://yesno.wtf/api')
+                    .then(function (response) {
+                        vm.answer = _.capitalize(response.data.answer);
+                    }).catch(function (err) {
+                        vm.answer = 'Error! Could not reach the API. ' + err;
+                    });
+            },
+            500
+        )
     }
 });
