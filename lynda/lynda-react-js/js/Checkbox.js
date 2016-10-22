@@ -1,7 +1,7 @@
 var Checkbox = React.createClass({
 
     getInitialState: function () {
-        return {checked: true}
+        return {checked: true};
     },
 
     handleCheck: function () {
@@ -27,5 +27,4 @@ var Checkbox = React.createClass({
     }
 });
 
-React.render(<Checkbox />,
-             document.getElementById('react-container'));
+//React.render(<Checkbox />, document.getElementById('react-container'));
