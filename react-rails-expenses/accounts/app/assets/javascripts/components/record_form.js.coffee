@@ -4,6 +4,7 @@
     date: ''
     amount: ''
   handleChange: (e) ->
+    console.log(e.target.value)
     name = e.target.name
     @setState "#{name}": e.target.value
   valid: ->
@@ -24,7 +25,7 @@
           type: 'text'
           className: 'form-control'
           placeholder: 'Date'
-          name: 'Date'
+          name: 'date'
           value: @state.date
           onChange: @handleChange
       React.DOM.div
