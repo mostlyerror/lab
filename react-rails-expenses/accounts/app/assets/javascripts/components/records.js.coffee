@@ -7,14 +7,12 @@
     records: []
 
   addRecord: (record) ->
-    records = @state.records.slice()
-    records.push record
+    records = React.addons.update(@state.records, { $push: [record] })
     @setState records: records
 
-  handleDelete: (record) ->
-    records = @state.records.slice()
-    index = records.indexOf record
-    records.splice index, 1
+  deleteRecord: (record) ->
+    index = @state.records.indexOf record
+    records = React.addons.update(@state.records, { $splice: [[index, 1]] })
     @replaceState records: records
 
   credits: ->
@@ -51,4 +49,4 @@
             React.DOM.th null, 'Actions'
         React.DOM.tbody null,
           for record in @state.records
-            React.createElement Record, key: record.id, record: record, handleDeleteRecord: @handleDelete
+            React.createElement Record, key: record.id, record: record, handleDeleteRecord: @deleteRecord
