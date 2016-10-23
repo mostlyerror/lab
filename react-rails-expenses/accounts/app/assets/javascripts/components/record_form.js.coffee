@@ -1,20 +1,24 @@
 @RecordForm = React.createClass
+
   getInitialState: ->
     title: ''
     date: ''
     amount: ''
+
   handleChange: (e) ->
-    console.log(e.target.value)
     name = e.target.name
     @setState "#{name}": e.target.value
+
   valid: ->
     @state.title && @state.date && @state.amount
+
   handleSubmit: (e) ->
     e.preventDefault()
     $.post '', { record: @state }, (data) =>
       @props.handleNewRecord data
       @setState @getInitialState()
     , 'JSON'
+
   render: ->
     React.DOM.form
       className: 'form-inline'
