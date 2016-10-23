@@ -1,34 +1,27 @@
-var appWatch = new Vue({
-    el: '#app-watch',
+new Vue({
+    el: "#demo",
     data: {
-        question: '',
-        answer: 'I cannot give you an answer until you ask a question!'
-    },
-    watch: {
-        question: function (newQuestion) {
-            this.answer = 'Waiting for you to stop typing...';
-            this.getAnswer();
-        }
-    },
-    methods: {
-        getAnswer: _.debounce(
-            function () {
-                var vm = this;
+        show: true
+    }
+});
 
-                if (this.question.indexOf('?') === -1) {
-                    vm.answer = 'Questions usually contain a question mark. ;-)';
-                    return;
-                }
-                vm.answer = 'Thinking...';
+new Vue({
+    el: "#demo2",
+    data: {
+        show: true
+    }
+});
 
-                axios.get('https://yesno.wtf/api')
-                    .then(function (response) {
-                        vm.answer = _.capitalize(response.data.answer);
-                    }).catch(function (err) {
-                        vm.answer = 'Error! Could not reach the API. ' + err;
-                    });
-            },
-            500
-        )
+new Vue({
+    el: "#demo3",
+    data: {
+        show: true
+    }
+});
+
+new Vue({
+    el: "#demo4",
+    data: {
+        show: true
     }
 });

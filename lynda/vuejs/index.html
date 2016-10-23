@@ -1,15 +1,81 @@
 <head>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.min.js"></script>
+	<link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
+
+	<style>
+		.fade-enter-active, .fade-leave-active {
+			transition: opacity .5s;
+		}
+		.fade-enter, .fade-leave-active {
+			opacity: 0;
+		}
+		/* Enter and leave animations can use different */
+		/* durations and timing functions.              */
+		.slide-fade-enter-active {
+			transition: all .3s ease;
+		}
+		.slide-fade-leave-active {
+			transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+		}
+		.slide-fade-enter, .slide-fade-leave-active {
+			padding-left: 10px;
+			opacity: 0;
+		}
+
+		.bounce-enter-active { animation: bounce-in .5s; }
+		.bounce-leave-active { animation: bounce-out .5s; }
+		@keyframes bounce-in {
+			0% { transform: scale(0); }
+			50% { transform: scale(2); }
+			100% { transform: scale(1); }
+		}
+		@keyframes bounce-out {
+			0% { transform: scale(1); }
+			50% { transform: scale(2); }
+			100% { transform: scale(0); }
+		}
+	</style>
 </head>
 
 <body>
-	<div id="app-watch">
-		<p>
-			Ask a yes/no question:
-			<input v-model="question">
-		</p>
-		<p>{{ answer }}</p>
+	<div id="demo">
+		<button @click="show = !show">
+			Toggle
+		</button>
+		<transition name="fade">
+			<p v-if="show">hello</p>
+		</transition>
 	</div>
+
+	<div id="demo2">
+		<button @click="show = !show">
+			Toggle render
+		</button>
+		<transition name="slide-fade">
+			<p v-if="show">hello</p>
+		</transition>
+	</div>
+
+	<div id="demo3">
+		<button @click="show = !show">
+			Toggle show
+		</button>
+		<transition name="bounce">
+			<p v-if="show">Look at me!</p>
+		</transition>
+	</div>
+
+	<div id="demo4">
+		<button @click="show = !show">Toggle render</button>
+		<transition
+			name="custom-classes-transition"
+			enter-active-class="animated tada"
+			leave-active-class="animated bounceOutRight"
+		>
+			<p v-if="show">hello</p>
+		</transition>
+	</div>
+
 
 	<script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
 	<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
