@@ -6,6 +6,26 @@
     e.preventDefault()
     @setState edit: !@state.edit
 
+  handleEdit: (e) ->
+    e.preventDefault()
+    that = this
+
+    data =
+      title: @refs.title.value
+      date: @refs.date.value
+      amount: @refs.amount.value
+
+    $.ajax
+      method: 'PUT'
+      url: "/records/#{ @props.record.id }"
+      dataType: 'JSON'
+      data:
+        record: data
+      success: (data) ->
+        that.setState edit: false
+        that.props.handleEditRecord that.props.record, data
+
+
   handleDelete: (e) ->
     e.preventDefault()
     $.ajax
