@@ -8,7 +8,6 @@
 
   handleEdit: (e) ->
     e.preventDefault()
-    that = this
 
     data =
       title: @refs.title.value
@@ -21,9 +20,10 @@
       dataType: 'JSON'
       data:
         record: data
-      success: (data) ->
-        that.setState edit: false
-        that.props.handleEditRecord that.props.record, data
+      success: ((data) ->
+        @setState edit: false
+        @props.handleEditRecord @props.record, data
+      ).bind(@)
 
 
   handleDelete: (e) ->
