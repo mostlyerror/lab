@@ -138,3 +138,19 @@ var double = value => value * 2;
     .map(value => value * 2)
     .filter(value => value > 2)
     .forEach(value => console.log(value));
+
+// IMPLICIT RETURNS
+
+// object literals
+var objectFactory = () => ({ modular: 'es6' });
+// doesn't work, looks like function expression
+//[1,2,3].map(value => { number: value }) // -> [undefined, .. ]
+//[1,2,3].map(value => { number: value, verified: true }) // syntax error
+// works
+console.log([1,2,3].map(value => ({ number: value, verified: true }))) // syntax error
+
+
+
+
+
+
