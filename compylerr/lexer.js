@@ -70,7 +70,7 @@ readFile(file)
         console.log('\n\nTOKENIZE:\n ',tokens);
 
         const ast = parser(tokens);
-        console.log('\n\nBUILD AST:\n', JSON.stringify(ast, null, 4)); //console.log(ast.body.map(node => node.arguments))
+        console.log('\n\nBUILD AST:\n', JSON.stringify(ast, null, 4));
     })
     .catch(err => console.error(err.message));
 
