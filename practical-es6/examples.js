@@ -124,4 +124,17 @@ setTimeout(function () {
 
 
 
+var example = (params) => {};
+// omit parans with one parameter
+var double = value => {
+    return value * 2;
+};
 
+// * combine implicit parens and implicit return for concise funcs
+var double = value => value * 2;
+
+// good use case
+[1,2,3,4]
+    .map(value => value * 2)
+    .filter(value => value > 2)
+    .forEach(value => console.log(value));
