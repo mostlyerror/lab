@@ -150,7 +150,43 @@ var objectFactory = () => ({ modular: 'es6' });
 console.log([1,2,3].map(value => ({ number: value, verified: true }))) // syntax error
 
 
+// DESTRUCTURING
 
+var character = {
+    name: 'Bruno',
+    pseudonym: 'Batman',
+    metadata: {
+        age: 34,
+        gender: 'male'
+    },
+    batarang: ['gas pellet', 'bat-mobile control', 'bat-cuffs']
+};
+var pseudonym = character.pseudonym;
+// same as...
+var { pseudonym } = character;
+// declare multiple
+var { pseudonym, name } = character;
+var { pseudonym, name } = character, two = 2;
+var { pseudonym: alias } = character; // alias -> 'Batman'
+// supports nested structures
+var { metadata: { gender } } = character;
 
+var palette = {
+    color: {
+        name: 'Red',
+        code: '#f00'
+    }
+};
+var { color: { code: colorCode } } = palette;
 
+// default valuse for undefined properties
+var { boots = true } = character; // <- true
+// also in nested
+var { metadata: { enemy = 'Satan' } } = character; // <- 'Satan'
+// default value with alias
+var { boots: footwear = true } = character;
+// with computed properties and alias
+var person =  { scientist: true };
+var type = 'scientist';
+var { [type]: value } = person;
 
