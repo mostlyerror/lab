@@ -272,3 +272,42 @@ function splitDate (date) {
 }
 
 var [, year, month, day] = splitDate('2015-11-06')
+
+// REST PARAMETERS AND SPLIT OPERATORS
+
+// pre-es6
+function print () {
+    var list = Array.prototype.slice.call(arguments);
+    console.log(list);
+}
+print('a', 'b', 'c');
+
+function print (first,  ...list) {
+    console.log(first);
+    console.log(list);
+}
+print('a', 'b', 'c');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
