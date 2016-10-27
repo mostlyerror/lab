@@ -150,7 +150,7 @@ var objectFactory = () => ({ modular: 'es6' });
 console.log([1,2,3].map(value => ({ number: value, verified: true }))) // syntax error
 
 
-// DESTRUCTURING
+// DESTRUCTURING OBJECTS
 
 var character = {
     name: 'Bruno',
@@ -189,4 +189,26 @@ var { boots: footwear = true } = character;
 var person =  { scientist: true };
 var type = 'scientist';
 var { [type]: value } = person;
+
+// DESTRUCTURING ARRAYS
+
+var coordinates = [12, -7];
+var [x, y] = coordinates;
+// skip
+var names = ['James', 'L.', 'Howlett'];
+var [ firstName,,lastName ] = names;
+// defaults
+var names = ['James', 'L.'];
+var [ firstName = 'John', , lastName = 'Doe' ] = names;
+
+// swapping variables in es5
+var left = 5;
+var right = 7;
+var tmp = left;
+left = right;
+right = tmp;
+
+var left = 5;
+var right = 7;
+[left, right] = [right, left]; // win.
 
