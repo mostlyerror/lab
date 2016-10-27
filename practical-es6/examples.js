@@ -252,7 +252,23 @@ function carFactory3 ({ brand = 'Volkswagen', year = 1999 } = {}) {
 carFactory3({ year: 3000 });
 carFactory3(); // no error
 
+// use cases for destructuring
+
+function getCoordinates () {
+    return { x: 10, y: 22, z: -1, type: '3d' };
+}
+var { x, y } = getCoordinates();
+
+function random ({ min = 1, max = 10 } = {}) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+console.log(random());
+console.log(random({ min: 15, max: 24 }));
 
 
+function splitDate (date) {
+    var rdate = /(\d+).(\d+).(\d+)/;
+    return rdate.exec(date);
+}
 
-
+var [, year, month, day] = splitDate('2015-11-06')
