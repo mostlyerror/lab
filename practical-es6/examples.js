@@ -93,3 +93,35 @@ var spaceship = {
 spaceship.fuel = 10;
 spaceship.deplete();
 
+// ARROW FUNCTIONS
+
+function name (params) {}
+var name  = function (params) {};
+// arrow funcs can't have name, bound to lexical scope.
+var name = (params) => {};
+
+// LEXICAL SCOPING
+
+var timer = {
+    seconds: 0,
+    start () {
+        // we don't need to do this: 
+        // var that = this;
+        setInterval(() => {
+            // in arrow funcs, `this` and `arguments` refer to 
+            // containing scope.
+            this.seconds++;
+        }, 1000);
+    }
+
+};
+
+timer.start();
+setTimeout(function () {
+    console.log(timer.seconds);
+}, 3500);
+// -> 3
+
+
+
+
