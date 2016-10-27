@@ -67,3 +67,29 @@ function getEnevelope (type, description) {
         [type]: description
     }
 }
+
+
+// METHOD DEFINITIONS
+
+var emitter = {
+    emit: function (event) {}
+};
+
+// simple obj defining getter and setter
+// sort of couples method to an object. hard to extract `deplete` method
+// from the object literal.
+var reserves = 4;
+var spaceship = {
+    get fuel () {
+        return reserves;
+    },
+    set fuel (value) {
+        reserves = value;
+    },
+    deplete () {
+        reserves = 0;
+    }
+};
+spaceship.fuel = 10;
+spaceship.deplete();
+
