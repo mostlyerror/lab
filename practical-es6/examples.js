@@ -212,3 +212,47 @@ var left = 5;
 var right = 7;
 [left, right] = [right, left]; // win.
 
+// DESTRUCTURING FUNCTION PARAMS
+
+// default args
+function powerOf (base, exponent = 2) {
+    return Math.pow(base, exponent);
+}
+
+var double = (input = 0) => input * 2;
+
+function sumOf (a = 1, b = 2, c = 3) { 
+    return a + b + c;
+}
+console.log(sumOf(undefined, undefined, 4)); // <- 7
+
+// use for default options object
+function carFactory (options = { brand: 'Volkswagen', year: 1989 }) {
+    console.log(options.brand);
+    console.log(options.year);
+}
+carFactory();
+// but you lose all defaults if you provide an options object
+carFactory({ year: 2000 });
+
+// destructure entirely is nice, but you do lose reference
+// to the options object itself.
+function carFactory2 ({ brand = 'Volkswagen', year = 1999 }) {
+    console.log(brand);
+    console.log(year);
+}
+carFactory2({ year: 2000 });
+//carFactory2(); <- error
+
+// better! provide default options object as well
+function carFactory3 ({ brand = 'Volkswagen', year = 1999 } = {}) {
+    console.log(brand);
+    console.log(year);
+}
+carFactory3({ year: 3000 });
+carFactory3(); // no error
+
+
+
+
+
