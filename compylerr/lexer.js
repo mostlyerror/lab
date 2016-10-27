@@ -12,7 +12,9 @@ function lexer (sourceBuffer) {
         });
 }
 
-readFile('lexer.js')
+const file = process.argv.pop()
+
+readFile(file)
     .then(buffer => {
         const lexed = lexer(buffer)
         console.log(lexed);
