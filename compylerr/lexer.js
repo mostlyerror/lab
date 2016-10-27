@@ -1,4 +1,5 @@
-fs = require('fs')
+//fs = require('fs')
+const reader = require('buffered-reader');
 
 function lexer (code) {
     return code.split(/\s+/) 
@@ -7,15 +8,21 @@ function lexer (code) {
             return isNaN(t)
                 ? {type: 'word', value: t}
                 : {type: 'number', value: t}
-        })
+        });
 }
 
 
 function lexMe (err, source) {
-    if (err) return console.log(err)
+    if (err) return console.log(err);
 
-    const lexed = lexer(source.toString())
-    console.log(lexed)
+    return lexer(source.toString());
 }
 
-fs.readFile('lexer.js', lexMe);
+//const lexed = fs.readFile('lexer.js', lexMe);
+//console.log(lexed);
+//
+new reader.DataReader ('lexer.js', { encoding: 'utf8' })
+    .on('error', (err) => console.log('err: ', err))
+    .on('line', (line) => console.log(lexMe(null, line)))
+    .on('end', () => console.log('EOF'))
+    .read();
