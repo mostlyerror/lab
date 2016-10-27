@@ -23,26 +23,27 @@ function parser (tokens) {
         const currentToken = tokens.shift();
         if (currentToken.type === 'word') {
 
+            let expr = {
+                type: 'CallExpression',
+                name: currentToken.value,
+                arguments: []
+            };
+            var num;
+
             switch (currentToken.value) {
                 case 'Paper':
-                    const expr = {
-                        type: 'CallExpression',
-                        name: 'Paper',
-                        arguments: []
-                    };
-
-                    const num = parseNum(tokens.shift());
+                case 'Pen':
+                    num = parseNum(tokens.shift());
                     expr.arguments.push(num);
                     AST.body.push(expr);
-
-                break;
-
-                case 'Pen':
-                    // ...
                 break;
 
                 case 'Line':
-                    // ...
+                    while (tokens.length && tokens[0].type === 'number') {
+                        num = parseNum(tokens.shift());
+                        expr.arguments.push(num);
+                    }
+                    AST.body.push(expr);
                 break;
             }
         }
@@ -66,10 +67,10 @@ const file = process.argv.pop()
 readFile(file)
     .then(buffer => {
         const tokens = lexer(buffer)
-        console.log(tokens);
+        console.log('\n\nTOKENIZE:\n ',tokens);
 
-        const parsed = parser(tokens);
-        console.log(parsed);
+        const ast = parser(tokens);
+        console.log('\n\nBUILD AST:\n', JSON.stringify(ast, null, 4)); //console.log(ast.body.map(node => node.arguments))
     })
     .catch(err => console.error(err.message));
 
