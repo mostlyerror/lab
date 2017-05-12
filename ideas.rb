@@ -1,7 +1,5 @@
 require 'httparty'
 require 'nokogiri'
-# attempting to stream results from scraped webpages as a lazy stream
-# https://robots.thoughtbot.com/modeling-a-paginated-api-as-a-lazy-stream
 
 module Ideas
   class Client
@@ -13,14 +11,17 @@ module Ideas
       noun_file = File.open('nouns', 'w')
       #verbs = []
       #nouns = []
-      fetch_paginated_data("/idea").each do |data|
+      fetch_paginated_data("/idea").take(1000) do |data|
         doc = Nokogiri::HTML(data)
         verb, noun = doc
           .css('img')
           .map {|node| node['src'] }
           .reject {|src| src =~ /images\// }
-          .map {|part| part.split('/').last }
-          .map {|str| str.sub('+', ' ') }
+          .map do |part|
+          str = part.split('/').last
+          str.gsub('+', ' ') + '\n'
+        end
+
         verb_file << verb
         noun_file << noun
         #verbs << verb
