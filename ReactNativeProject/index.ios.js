@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
-import { AppRegistry, View, Text, TextInput } from 'react-native';
-export class PizzaTranslator extends Component {
+import { AppRegistry, ListView, View, Text, TextInput } from 'react-native';
+class ListViewBasics extends Component {
+  // initialize hardcoded data
   constructor(props) {
     super(props)
-    this.state = {text: ''}
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2 })
+    this.state = {
+      dataSource: ds.cloneWithRows([
+        'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin'
+      ])
+    }
   }
-
   render() {
     return (
-      <View style={{padding: 10}}>
-        <TextInput
-          style={{height: 40}}
-          placeholder="Type here to translate!"
-          onChangeText={(text) => this.setState({text})}
+      <View style={{flex: 1, paddingTop: 22}}>
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={(rowData) => <Text>{rowData}</Text>}
         />
-        <Text style={{padding: 10, fontSize: 42}}>
-          {this.state.text.split(' ').map((word) => word && '🍕').join(' ')}
-        </Text>
       </View>
     )
   }
 }
-AppRegistry.registerComponent('ReactNativeProject', () => PizzaTranslator);
+AppRegistry.registerComponent('ReactNativeProject', () => ListViewBasics);
