@@ -138,6 +138,10 @@ deep-extend@~0.4.0:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.4.2.tgz#48b699c27e334bf89f10892be432f6e4c7d34a7f"
 
+default-pager@^1.0.1:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/default-pager/-/default-pager-1.1.0.tgz#ed28895b04a96e37078bdc62239131971620eeec"
+
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
@@ -540,6 +544,12 @@ split@^1.0.0:
   resolved "https://registry.yarnpkg.com/split/-/split-1.0.0.tgz#c4395ce683abcd254bc28fe1dabb6e5c27dcffae"
   dependencies:
     through "2"
+
+stream-handbook@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/stream-handbook/-/stream-handbook-1.0.0.tgz#fdf49281eb57717f0912767e151ed52b3e89323c"
+  dependencies:
+    default-pager "^1.0.1"
 
 string-to-stream@^1.1.0:
   version "1.1.0"
