@@ -1,0 +1,3 @@
+[submodule "hotwire-todos"]
+	path = hotwire-todos
+	url = ../hotwire-todos
