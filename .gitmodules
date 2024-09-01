@@ -1,3 +1,6 @@
 [submodule "hotwire-todos"]
 	path = hotwire-todos
 	url = ../hotwire-todos
+[submodule "webbit"]
+	path = webbit
+	url = ../webbit
