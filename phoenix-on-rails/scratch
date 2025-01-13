@@ -1,0 +1,13 @@
+# comprehensions
+iex(9)> for number <- [1,2,3,4] do
+...(9)>   IO.puts(number)
+...(9)> end
+1
+2
+3
+4
+[:ok, :ok, :ok, :ok]
+iex(10)> squares = for n <- [1,2,3,4] do
+...(10)>   n * n
+...(10)> end
+[1, 4, 9, 16]
