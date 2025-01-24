@@ -1,7 +1,16 @@
 {
   "files": [],
+  // we're going to exclude the electron folder
+  // and define our own tsconfig in src/electron
+  "exclude": [
+    "src/electron"
+  ],
   "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
   ]
 }
