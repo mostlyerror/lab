@@ -2,7 +2,7 @@ import { app, BrowserWindow } from 'electron'
 import path from 'path'
 
 // some typescript test code
-type test = string;
+// type _test = string;
 
 app.on('ready', () => {
   let mainWindow = new BrowserWindow({})

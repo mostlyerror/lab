@@ -1,5 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
+// some typescript test code
+// type _test = string;
 app.on('ready', () => {
     let mainWindow = new BrowserWindow({});
     // can't juse use this: mainWindow.loadFile('dist-react/index.html')
