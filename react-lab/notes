@@ -1,0 +1,9 @@
+nvm ls
+nvm use 20
+npm -v
+npm create vite@latest
+# install packages
+react, javascript
+cd react-lab
+npm install
+npm run dev
